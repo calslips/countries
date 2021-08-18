@@ -24,21 +24,29 @@ const MultiMatch = ({ result }) => <p>{result}</p>;
 
 const Match = ({ name, capital, population, languages }) => (
   <div>
-    <h1>{name}</h1>
-    <p>capital {capital}</p>
-    <p>population {population}</p>
-    <h2>languages</h2>
+    <Name name={name} />
+    <Capital capital={capital} />
+    <Population population={population} />
     <Languages languages={languages} />
   </div>
 );
 
+const Name = ({ name }) => <h1>{name}</h1>;
+
+const Capital = ({ capital }) => <p>capital {capital}</p>;
+
+const Population = ({ population }) => <p>population {population}</p>;
+
 const Languages = ({ languages }) => {
   return (
-    <ul>
-      {languages.map((language) => (
-        <Language key={language.name} language={language.name} />
-      ))}
-    </ul>
+    <>
+      <h2>languages</h2>
+      <ul>
+        {languages.map((language) => (
+          <Language key={language.name} language={language.name} />
+        ))}
+      </ul>
+    </>
   );
 };
 
