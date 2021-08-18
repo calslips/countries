@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Matches = ({ results }) => {
+const Matches = ({ results, onClick }) => {
   if (results.length > 10) {
     return <MultiMatch result={"Too many matches, specify another filter"} />;
   } else if (results.length > 1 && results.length <= 10) {
     return results.map((result) => (
-      <MultiMatch key={result.name} result={result.name} />
+      <MultiMatch
+        key={result.name}
+        result={result.name}
+        button={<ShowButton onClick={onClick} country={result.name} />}
+      />
     ));
   }
   return results.map((result) => (
@@ -21,7 +25,17 @@ const Matches = ({ results }) => {
   ));
 };
 
-const MultiMatch = ({ result }) => <p>{result}</p>;
+const MultiMatch = ({ result, button }) => (
+  <p>
+    {result} {button}
+  </p>
+);
+
+const ShowButton = ({ onClick, country }) => (
+  <button onClick={onClick} value={country}>
+    show
+  </button>
+);
 
 const Match = ({ name, capital, population, languages, flag }) => (
   <div>
@@ -55,7 +69,7 @@ const Languages = ({ languages }) => {
 const Language = ({ language }) => <li>{language}</li>;
 
 const Flag = ({ flag, name }) => (
-  <img src={flag} alt={`Flag of ${name}`} width="50%" height="75%" />
+  <img src={flag} alt={`Flag of ${name}`} width="150" height="100" />
 );
 
 const App = () => {
@@ -83,10 +97,20 @@ const App = () => {
     }
   };
 
+  const handleClick = (event) => {
+    let value = event.target.value;
+    console.log(value);
+    let result = countries.filter((country) =>
+      country.name.toUpperCase().includes(value.toUpperCase())
+    );
+    setSearch(value);
+    setResults(result);
+  };
+
   return (
     <div>
       find countries <input value={search} onChange={handleSearch} />
-      <Matches results={results} />
+      <Matches results={results} onClick={handleClick} />
     </div>
   );
 };
