@@ -16,18 +16,20 @@ const Matches = ({ results }) => {
       capital={result.capital}
       population={result.population}
       languages={result.languages}
+      flag={result.flag}
     />
   ));
 };
 
 const MultiMatch = ({ result }) => <p>{result}</p>;
 
-const Match = ({ name, capital, population, languages }) => (
+const Match = ({ name, capital, population, languages, flag }) => (
   <div>
     <Name name={name} />
     <Capital capital={capital} />
     <Population population={population} />
     <Languages languages={languages} />
+    <Flag flag={flag} name={name} />
   </div>
 );
 
@@ -51,6 +53,10 @@ const Languages = ({ languages }) => {
 };
 
 const Language = ({ language }) => <li>{language}</li>;
+
+const Flag = ({ flag, name }) => (
+  <img src={flag} alt={`Flag of ${name}`} width="50%" height="75%" />
+);
 
 const App = () => {
   const [countries, setCountries] = useState([]);
