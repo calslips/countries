@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Matches = ({ results }) => {
-  // if (results.length === 0) {
-  //   return <></>;
-  // }
-  return results.map((result) => <Match key={result.name} result={result} /> );
+  if (results.length > 10) {
+    return (
+      <Match result={'Too many matches, specify another filter'} />
+    )
+  }
+  return results.map((result) => <Match key={result.name} result={result.name} /> );
 };
 
 const Match = ({ result }) => (
   <p>
-    {result.name}
+    {result}
   </p>
 );
 
