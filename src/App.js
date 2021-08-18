@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Matches = ({ results }) => {
+  // if (results.length === 0) {
+  //   return <></>;
+  // }
   return results.map((result) => <Match key={result.name} result={result} /> );
 };
 
@@ -29,12 +32,12 @@ const App = () => {
     let result = countries.filter((country) =>
       country.name.toUpperCase().includes(query.toUpperCase())
     );
-    setResults(result);
+    if (query.length === 0) {
+      setResults([]);
+    } else {
+      setResults(result);
+    }
   }
-
-  // const displayResult = () => {
-
-  // }
 
   return (
     <div>
