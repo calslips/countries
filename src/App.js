@@ -79,21 +79,36 @@ const Weather = ({ capital, weather }) => {
   return (
     <>
       <h2>Weather in {capital}</h2>
-      <p>
-        <b>temperature: </b>
-        {weather.current.temperature} Fahrenheit
-      </p>
-      <img
-        src={weather.current.weather_icons[0]}
-        alt={"Current weather icon"}
+      <Temperature temperature={weather.current.temperature} />
+      <WeatherIcon
+        icon={weather.current.weather_icons[0]}
+        description={weather.current.weather_descriptions[0]}
       />
-      <p>
-        <b>wind: </b>
-        {weather.current.wind_speed} mph direction {weather.current.wind_dir}
-      </p>
+      <Wind
+        speed={weather.current.wind_speed}
+        direction={weather.current.wind_dir}
+      />
     </>
   );
 };
+
+const Temperature = ({ temperature }) => (
+  <p>
+    <b>temperature: </b>
+    {temperature} Fahrenheit
+  </p>
+);
+
+const WeatherIcon = ({ icon, description }) => (
+  <img src={icon} alt={`${description} weather icon`} />
+);
+
+const Wind = ({ speed, direction }) => (
+  <p>
+    <b>wind: </b>
+    {speed} mph direction {direction}
+  </p>
+);
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -116,7 +131,7 @@ const App = () => {
         .then((response) => {
           console.log(response.data);
           setWeather(response.data);
-        })
+        });
     }
   };
 
@@ -131,6 +146,8 @@ const App = () => {
     );
     if (query.length === 0) {
       setResults([]);
+    } else if (result.length === 1 && result[0] === results[0]) {
+      return;
     } else {
       setResults(result);
     }
